@@ -1,5 +1,7 @@
 <?php
 
+namespace Mapbox\Exception;
+
 /**
  * Represents an Exception that happened while communicating with Mapbox.
  * Includes information about the request that triggered the problem.
@@ -7,9 +9,9 @@
  * @package Mapbox
  * @license Apache 2.0
  */
-class MapboxApiException extends Exception {
+class ApiException extends \Exception {
 	protected $info; //debug array
-	
+
 	public function __construct($info) {
 		$this->info = $info;
 		if (isset($info['message'])){
@@ -23,5 +25,5 @@ class MapboxApiException extends Exception {
 	public function debug(){
 		return $this->info;
 	}
+
 }
-?>

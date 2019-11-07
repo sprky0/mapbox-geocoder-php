@@ -1,5 +1,6 @@
 <?php
 
+namespace Mapbox;
 
 /**
  * Represents a top level Mapbox query. Knows how to represent the query as URL
@@ -8,7 +9,7 @@
  * @license Apache 2.0
  */
 
-class MapboxQuery {
+class Query {
 	protected $fullTextSearch; //string
 	protected $selectFields = null; //otherwise comma-delineated list of fieldnames
 	protected $limit; //int
@@ -63,28 +64,28 @@ class MapboxQuery {
 		$temp['filters'] = $this->rowFiltersJsonOrNull();
 		$temp['geo'] = $this->geoBoundsJsonOrNull();
 		$temp['threshold'] = $this->thresholdOrNull();
-		$temp = array_filter($temp); //remove nulls		
+		$temp = array_filter($temp); //remove nulls
 
 		//initialize
-		$temp2 = array();
+		$temp2 = [];
 
 		//encode (cannot use http_build_query() as we need to *raw* encode adn this not provided until PHP v5.4)
 		foreach ($temp as $key => $value){
-			$temp2[] = $key."=".rawurlencode($value);		
-		}	
-		
+			$temp2[] = $key."=".rawurlencode($value);
+		}
+
 		//process additional kay/value parameters
 		foreach ($this->keyValuePairs as $key => $value){
-			$temp2[] = $key."=".rawurlencode($value);	
+			$temp2[] = $key."=".rawurlencode($value);
 		}
-		
+
 		return implode("&", $temp2);
 	}
 
 	/**
 	 * Adds misc parameters to the URL query
 	 * @param string key Key namev
-	 * @param string un-URL-encoded value 
+	 * @param string un-URL-encoded value
 	 */
 	public function addParam($key,$value){
 		$this->keyValuePairs[$key] = $value;
@@ -92,29 +93,27 @@ class MapboxQuery {
 	}
 
 	/**
-	* Adds array of name/key pairs to query for eventual resolution
- 	* @param array keyValueArray A key value array
-	* $return object This query object or NULL on failure
- 	*/
-  	public function addParamArray($keyValueArray) {
-	  	if (!is_array($keyValueArray)){
-	  		throw new exception (__METHOD__." Parameter must be array: key = attribute name, value = attribute value");
-	  	}
-	  	foreach($keyValueArray as $key => $value) {
-	 		$this->keyValuePairs[$key] = $value;
-	 	}
-	    	return $this;
- 	}
+	 * Adds array of name/key pairs to query for eventual resolution
+	 * @param array keyValueArray A key value array
+	 * $return object This query object or NULL on failure
+	 */
+	public function addParamArray($keyValueArray) {
+		if (!is_array($keyValueArray)){
+			throw new \Exception (__METHOD__." Parameter must be array: key = attribute name, value = attribute value");
+		}
+		foreach($keyValueArray as $key => $value) {
+			$this->keyValuePairs[$key] = $value;
+		}
+		return $this;
+	}
 
 
 	public function toString() {
 		try {
 			return urldecode($this->toUrlQuery());
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			throw $e;
 		}
 	}
 
-	
 }
-?>

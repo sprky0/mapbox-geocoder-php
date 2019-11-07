@@ -1,41 +1,30 @@
-#Introduction
-This is the official PHP driver for the [Mapbox API](https://www.mapbox.com/developers/api/). It is crafted with artisanal skill from native hardwoods.
+# Introduction
 
-The PHP driver currently supports geocoding, reverse geocoding, and permanent geocoding APIs.  Others follow.
+This is a fork of the PHP geocoding example from the [Mapbox API](https://www.mapbox.com/developers/api/). This is not an officially supported project.
 
-#PHP Specifics 
+I have rapidly restructured it to be PSR-4 compatible, work with PHP7, and be required and autoloaded using Composer.
+
+The PHP driver currently supports geocoding, reverse geocoding, and permanent geocoding APIs.  This is great because I need geocoding.  If there is interest in this project, more could follow.
+
+# PHP Specifics
+
 ##Dependencies
-* PHP >=5.1.2 is required. 
-* The php5-curl module is required. 
-* SPL is required for autoloading.
-* JSON is required.  Some distributions as of PHP 5.5rc2 lack the previously included JSON extension due to a license conflict.  Use <tt>sudo apt-get install php5-json</tt>.
+* PHP >= 7.0 is required.
+* The php-curl module is required.
+* The composer PSR-4 default autoloader will be user
 
-##Autoloading
-All classes are autoloaded.  Just <tt>require_once("Mapbox.php")</tt> and you're laughing.
-
-The PHP <tt>__autoload()</tt> method is deprecated; this library uses <tt>spl_autoload_register()</tt>.  The Mapbox Autoload will not mess with other libraries or frameworks.
-
-#Getting Started
+# Getting Started
 ## Get a Mapbox Token
 [Register with Mapbox](https://www.mapbox.com/studio/signup/) for free access to most Mapbox services.  Go to the [API Token page](https://www.mapbox.com/studio/account/tokens/) to get or create an API token.
-
-## Test Your Integration and Environment
-Run <tt>test.php</tt> on the *command line*: 
-
-	'php test.php <yourMapboxToken> [logfile]'
-	
-On windows remember to use the <tt>-f</tt> switch:
-	
-	'php -f test.php <yourMapboxToken> [logfile]'  
-
-This checks your PHP install environment and performs a number of unit tests. The script takes your token as parameter one, and an optional output file as parameter two. By default the test echoes to stdout.
 
 ## Using the Driver
 Require the file 'Mapbox.php, and instantiate a <tt>mapbox</tt> object with the token as parameter'
 
 ```php    
-	//setup
-	require_once('Mapbox.php');
+	//setup - require your composer autoloader
+	require_once('vendor/composer/autoload.php');
+
+	// instantiate a Mapbox class with your token
 	$mapbox = new Mapbox("<yourMapboxToken>");
 ```
 The driver creates an authenticated handle to Mapbox and configures class loading on instantiation, so be sure to always instantiate a Mapbox object first.
@@ -44,12 +33,12 @@ The driver creates an authenticated handle to Mapbox and configures class loadin
 
 (Remember, first create a Mapbox object as we've done above.)
 ```php
-    	//geocode
-    	$address = "149 9th St, San Francisco, CA 94103";
-    	$res = $mapbox->geocode($address);
-    	//view results for debugging
-	print_r($res->getData());
-```	
+  //geocode
+  $address = "149 9th St, San Francisco, CA 94103";
+  $res = $mapbox->geocode($address);
+  //view results for debugging
+  print_r($res->getData());
+```
 
 You can add the `types` and `proximity` parameters:
 ```php
@@ -91,7 +80,7 @@ Permanent Geocoding requires specific authentication from Mapbox, so it's a diff
     	$res = $mapbox->geocodePermanent($address);
     	//view results for debugging
 	print_r($res->getData());
-```	
+```
 
 Unnecessary Reminder: we use <tt>print_r()</tt> in these examples so you can review the output visually.  Obviously, but worth a reminder nonetheless, you do not want to use <tt>print_r()</tt> in production.  
 
@@ -126,26 +115,20 @@ and a wealth of other metadata is available via the response object outside debu
 ```php
 	//was the request successful?
 	$success = $res->success();
-	
+
 	//get result count
 	$count = $res->getCount();
-	
+
 	//get http status code: 200, 404, etc.
 	$code = $res->getCode();
-	
+
 	//get server headers (including rate-limit information)
 	$headers = $res->getHeaders();
-	
+
 	//get request metadata
 	$request - $res->getInfo();
-	
+
 	//get attribution
 	$attribution - $res->getAttribution();
-	
+
 ```
-
-
-
-
-
-

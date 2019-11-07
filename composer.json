@@ -1,0 +1,6 @@
+{
+    "name": "mapbox/geocoder",
+    "description": "Geocoding wrapper for Mapbox API",
+    "type": "library",
+    "require": {}
+}

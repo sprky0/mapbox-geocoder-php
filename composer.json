@@ -2,5 +2,10 @@
     "name": "mapbox/geocoder",
     "description": "Geocoding wrapper for Mapbox API",
     "type": "library",
-    "require": {}
+    "require": {},
+    "autoload": {
+        "psr-4": {
+          "Mapbox\\": "src/Mapbox/"
+        }
+    }
 }

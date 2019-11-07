@@ -26,12 +26,9 @@ class Mapbox {
 	 * Constructor. Creates authenticated access to Mapbox.
 	 * @param string token your Mapbox token.
 	 */
-	public function __construct($token) {
-		//register autoloader
-		spl_autoload_register(array (
-			get_class(),
-			'MapboxAutoload'
-		));
+	public function __construct(string $token) {
+		if (!$token)
+			throw new \Exception("Missing mapbox token");
 		$this->token = $token;
 	}
 
@@ -86,17 +83,21 @@ class Mapbox {
 	}
 
 	/**
-	  * Geocodes by returning a response containing the address nearest a given point.
-	  * @param string query The unstructured address or place-name
-	  * @param array types containing n of country, region, postcode, place, neighborhood, address, or poi
-	  * @param array proximity with keys 'longitude' , 'latitude'
-	  * @return the response of a geocode query against Mapbox.
-	  */
+	 * Geocodes by returning a response containing the address nearest a given point.
+	 * @param string query The unstructured address or place-name
+	 * @param array types containing n of country, region, postcode, place, neighborhood, address, or poi
+	 * @param array proximity with keys 'longitude' , 'latitude'
+	 * @return the response of a geocode query against Mapbox.
+	 */
 	public function geocode($query, $types=array(), $proximity=array()) {
 		$params = array();
-		if (empty($query)){return null;}
+		if (empty($query)){
+			return null;
+		}
 		$url = $this->urlForGeocode($query);
 		if (!empty($types)){
+			// @todo strict check against
+			// country, region, postcode, place, neighborhood, address, or poi
 			$params['types'] = $types;
 		}
 		if (!empty($proximity)){
@@ -265,20 +266,6 @@ class Mapbox {
 
 		return $res;
 	}
-
-
-	// /**
-	//  * Autoloader for file dependencies
-	//  * Called by spl_autoload_register() to avoid conflicts with autoload() methods from other libs
-	//  */
-	// public static function mapboxAutoload($className) {
-	// 	$filename = dirname(__FILE__) . "/" . $className . ".php";
-	// 	// don't interfere with other classloaders
-	// 	if (!file_exists($filename)) {
-	// 		return;
-	// 	}
-	// 	include $filename;
-	// }
 
 	/**
 	 * Sets maximum number of seconds to connect to the server before bailing

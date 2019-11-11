@@ -14,7 +14,7 @@ class Mapbox {
 
 	protected $home = "https://api.mapbox.com"; //URL base
 	protected $driverVersion = "mapbox-php-driver-v0.1.0";  //current version of the php wrapper
-	protected $referrerURL = null;
+	protected $refererURL = null;
 	protected $versions = array('geocoder'=>'v5'); //versions for endpoint
 	protected $debug = false; //debug flag
 	protected $token; //access token
@@ -51,8 +51,8 @@ class Mapbox {
 	 * Sets the referrerURL which will be sent to the backend
 	 * @param string url
 	 */
-	public function setReferrerURL($url) {
-		$this->referrerURL = $url;
+	public function setRefererURL($url) {
+		$this->refererURL = $url;
 	}
 
 	/**
@@ -150,10 +150,10 @@ class Mapbox {
 		//custom input headers
 		$curlOptions[CURLOPT_HTTPHEADER] = array ();
 
-		if (!empty($this->referrerURL))
-			$curlOptions[CURLOPT_HTTPHEADER][] = "X-Mapbox-Lib: " . $this->referrerURL;
+		if (!empty($this->refererURL))
+			$curlOptions[CURLOPT_HTTPHEADER][] = "Referer: {$this->refererURL}";
 
-		$curlOptions[CURLOPT_HTTPHEADER][] = "X-Mapbox-Lib: " . $this->driverVersion;
+		$curlOptions[CURLOPT_HTTPHEADER][] = "X-Mapbox-Lib: {$this->driverVersion}";
 		if ($requestMethod == "POST") {
 			$curlOptions[CURLOPT_HTTPHEADER][] = "Content-Type: " . "application/x-www-form-urlencoded";
 		}

@@ -8,7 +8,7 @@ The PHP driver currently supports geocoding, reverse geocoding, and permanent ge
 
 # PHP Specifics
 
-##Dependencies
+## Dependencies
 * PHP >= 7.0 is required.
 * The php-curl module is required.
 * The composer PSR-4 default autoloader will be user

@@ -7,7 +7,6 @@ I have rapidly restructured it to be PSR-4 compatible, work with PHP7, and be re
 The PHP driver currently supports geocoding, reverse geocoding, and permanent geocoding APIs.  This is great because I need geocoding.  If there is interest in this project, more could follow.
 
 # PHP Specifics
-
 ##Dependencies
 * PHP >= 7.0 is required.
 * The php-curl module is required.

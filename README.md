@@ -1,9 +1,6 @@
-# geocoding-example
-[![Build Status](https://travis-ci.org/mapbox/geocoding-example.svg?branch=master)](https://travis-ci.org/mapbox/geocoding-example)
+# geocoding
 
-Examples of how to use the Mapbox geocoder. We do our best to make our [geocoding API simple to understand](https://www.mapbox.com/developers/api/geocoding/). But sometimes it's nice to see example implementations of things like batch geocoding where parallelization and throttling are necessary.
-
-This repo is a work in progress. Don't see your favorite language? [Open a ticket](https://github.com/mapbox/geocoding-example/issues/new)!
+Library to work with the Mapbox geocoder.
 
 Please consult individual subdirectories' README files for more specific installation instructions and notes.  PHP Examples are available in the [Mapbox PHP SDK Repo](https://github.com/mapbox/mapbox-sdk-php).
 
